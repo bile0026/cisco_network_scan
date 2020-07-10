@@ -11,9 +11,17 @@
       register: ping_result
       ignore_errors: true
 
+    - name: Gather switch information
+      ios_facts:
+        gather_subset: min
+      register: ios_result
+
     - name: Group hosts by online
       group_by: key=reachable
-      when: ping_result.rc == 0
+      when:
+        - ping_result.rc == 0
+        - not ios_result.ansible_facts.ansible_net_model contains {{ router_models }}
+        - not ios_result.ansible_facts.ansible_net_model contains {{ firewall_models }}
       delegate_to: localhost
 
 - name: Re-IP Switch
