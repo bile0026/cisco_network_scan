@@ -10,6 +10,10 @@
       - l2_interfaces
   register: ios_interfaces_result
 
+- name: Parse data
+  set_fact:
+    ios_l2_interfaces: "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }}"
+
 # parse information from devices in preparation for processing changes
 # - name: Parse Access Interface Data
 #   set_fact:
@@ -19,7 +23,7 @@
   set_fact:
     interfaces_parsed: item
   with_subelements:
-    - "{{ ios_interfaces_result.ansible_facts.ansible_network_resources.l2_interfaces }}"
+    - "{{ ios_l2_interfaces }}"
     - access
 
 #FIXME not sure if when works
