@@ -4,5 +4,5 @@
 - name: Gather switch interface information
   ios_facts:
     gather_subset: interfaces
-  register: ios_result
+  register: ios_interfaces_result
 
