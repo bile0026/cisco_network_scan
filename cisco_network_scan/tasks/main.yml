@@ -23,7 +23,7 @@
   set_fact:
     interfaces_parsed: item
   with_subelements:
-    - "{{ ios_l2_interfaces }}"
+    - "{{ ios_l2_interfaces.l2_interfaces }}"
     - access
 
 #FIXME not sure if when works
