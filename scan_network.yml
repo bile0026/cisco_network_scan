@@ -6,8 +6,8 @@
   vars:
     ansible_network_os: ios
     ansible_command_timeout: 30
-    router_models: 'SR'
-    firewall_models: 'ASA'
+    router_models: SR
+    firewall_models: ASA
 
   tasks:
     - name: Ping for reachability
