@@ -1,0 +1,28 @@
+---
+- name: Check for online hosts
+  hosts: all
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Ping for reachability
+      command: ping -c2 {{ inventory_hostname }}
+      delegate_to: localhost
+      register: ping_result
+      ignore_errors: true
+
+    - name: Group hosts by online
+      group_by: key=reachable
+      when: ping_result.rc == 0
+      delegate_to: localhost
+
+- name: Re-IP Switch
+  hosts: reachable
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - include_role:
+        name: cisco_network_scan
+      vars:
+        ansible_network_os: ios
