@@ -25,6 +25,7 @@
       group_by: key=reachable
       when:
         - ping_result.rc == 0
+        - ios_result.ansible_facts.ansible_net_model is defined
         - "'SR' not in ios_result.ansible_facts.ansible_net_model"
         - "'ASA' not in ios_result.ansible_facts.ansible_net_model"
       delegate_to: localhost
