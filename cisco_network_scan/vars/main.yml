@@ -1,2 +1,4 @@
 ---
 # vars file for cisco_network_scan
+router_models: "SR"
+firewall_models: "ASA"
