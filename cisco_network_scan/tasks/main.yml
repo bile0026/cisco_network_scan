@@ -15,7 +15,7 @@
   set_fact:
     interfaces_parsed: item
   with_subelements:
-    - "{{ ios_interfaces_result.ansible_facts }}"
+    - "{{ ios_interfaces_result.ansible_facts.ansible_network_resources.l2_interfaces }}"
     - access
 
 #FIXME not sure if when works
