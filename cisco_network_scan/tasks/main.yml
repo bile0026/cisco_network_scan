@@ -23,8 +23,8 @@
   set_fact:
     interfaces_parsed: item
   with_subelements:
-    - "{{ ios_l2_interfaces.l2_interfaces }}"
-    - access
+    - "{{ ios_l2_interfaces }}"
+    - l2_interfaces
 
 #FIXME not sure if when works
 - name: Get mac address_table
