@@ -1,2 +1,8 @@
 ---
 # tasks file for cisco_network_scan
+
+- name: Gather switch information
+  ios_facts:
+    gather_subset: interfaces
+  register: ios_result
+
