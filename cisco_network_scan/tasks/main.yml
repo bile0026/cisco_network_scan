@@ -9,7 +9,7 @@
 # parse information from devices in preparation for processing changes
 - name: Parse Access Interface Data
   set_fact:
-    interfaces_parsed: "{{ ios_interfaces_result.ansible_facts.ansible_network_resources[(lookup('subelements', access, 'name'))] }}"
+    interfaces_parsed: "{{ ios_interfaces_result.ansible_facts.ansible_network_resources | lookup('subelements', access, 'name') }}"
 
 #FIXME not sure if when works
 - name: Get mac address_table
