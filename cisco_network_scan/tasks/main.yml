@@ -3,7 +3,7 @@
 
 - name: Gather switch interface information
   ios_facts:
-    gather_subset: l2_interfaces
+    gather_subset: interfaces
   register: ios_interfaces_result
 
 - name: debug
