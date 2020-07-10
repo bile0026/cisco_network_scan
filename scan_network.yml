@@ -3,6 +3,9 @@
   hosts: all
   gather_facts: false
   connection: local
+  vars:
+    ansible_network_os: ios
+    ansible_command_timeout: 30
 
   tasks:
     - name: Ping for reachability
