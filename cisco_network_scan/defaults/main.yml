@@ -1,4 +1,4 @@
 ---
 # defaults file for cisco_network_scan
-router_models: "sr"
-firewall_models: "asa"
+router_models: "SR"
+firewall_models: "ASA"
