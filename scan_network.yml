@@ -23,8 +23,8 @@
       group_by: key=reachable
       when:
         - ping_result.rc == 0
-        - not ios_result.ansible_facts.ansible_net_model contains {{ router_models }}
-        - not ios_result.ansible_facts.ansible_net_model contains {{ firewall_models }}
+        - "not ios_result.ansible_facts.ansible_net_model contains {{ router_models }}"
+        - "not ios_result.ansible_facts.ansible_net_model contains {{ firewall_models }}"
       delegate_to: localhost
 
 - name: Re-IP Switch
