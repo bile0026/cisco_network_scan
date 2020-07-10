@@ -16,7 +16,7 @@
       register: ping_result
       ignore_errors: true
 
-    - name: Gather switch information
+    - name: Gather basic switch information
       ios_facts:
         gather_subset: min
       register: ios_result
