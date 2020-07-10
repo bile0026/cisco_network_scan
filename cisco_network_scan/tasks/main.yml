@@ -19,6 +19,7 @@
 #   set_fact:
 #     interfaces_parsed: "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }} | lookup('subelements', access, 'name')"
 
+#FIXME Need to find the right key and elements for with_subelements
 - name: Parse Access Interface Data
   set_fact:
     interfaces_parsed: item
