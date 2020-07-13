@@ -1,14 +1,34 @@
 ---
 # tasks file for cisco_network_scan
 
-- name: Gather switch interface information
-  cisco.ios.ios_facts:
-    gather_subset:
-      - '!all'
-      - '!min'
-    gather_network_resources:
-      - l2_interfaces
-  register: ios_interfaces_result
+- name: Gather IOS Information
+  ios_facts:
+    gather_network_resources: l2_interfaces
+  register: ios_result 
+
+# parse information from devices in preparation for processing changes
+- name: Parse Access Interface Data
+  set_fact:
+    interfaces_parsed: "{{ ios_result.ansible_facts.ansible_network_resources | json_query(query) }}"
+  vars:
+    query: "l2_interfaces[].{name: name, vlan: access.vlan}"
+  delegate_to: localhost
+
+- name: Get mac address table for access ports
+  ios_command:
+    commands:
+      - "show mac address-table interface {{ item.name }}"
+  with_items: interfaces_parsed
+  register: mac_address_table
+
+# - name: Gather switch interface information
+#   cisco.ios.ios_facts:
+#     gather_subset:
+#       - '!all'
+#       - '!min'
+#     gather_network_resources:
+#       - l2_interfaces
+#   register: ios_interfaces_result
 
 # - name: Parse data
 #   set_fact:
@@ -20,19 +40,19 @@
 #     interfaces_parsed: "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }} | lookup('subelements', access, 'name')"
 
 #FIXME Need to find the right key and elements for with_subelements
-- name: Parse Access Interface Data
-  set_fact:
-    interfaces_parsed: item
-  with_subelements:
-    - "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }}"
-    - l2_interfaces.access
+# - name: Parse Access Interface Data
+#   set_fact:
+#     interfaces_parsed: item
+#   with_subelements:
+#     - "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }}"
+#     - l2_interfaces.access
 
 #FIXME not sure if when works
-- name: Get mac address_table
-  ios_command:
-    lines:
-      - "show mac address-table interfaces {{ item.name }}"
-  when:
-      - ios_interfaces_result.ansible_facts.ansible_net_interfaces[(lookup('var', 'item.name'))].operstatus == up
-  with_items: interfaces_parsed
-  register: mac_address_table
+# - name: Get mac address_table
+#   ios_command:
+#     lines:
+#       - "show mac address-table interfaces {{ item.name }}"
+#   when:
+#       - ios_interfaces_result.ansible_facts.ansible_net_interfaces[(lookup('var', 'item.name'))].operstatus == up
+#   with_items: interfaces_parsed
+#   register: mac_address_table
