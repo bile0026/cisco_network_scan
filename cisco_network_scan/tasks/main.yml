@@ -23,7 +23,7 @@
 
 - name: Parse mac address_table data
   set_fact:
-    mac_address_table_parsed: "{{ mac_address_table_results | parse_genie(command="show mac address-table", os=ansible_network_os) }}"
+    mac_address_table_parsed: "{{ mac_address_table_results | clay584.genie.parse_genie(command="show mac address-table", os=ansible_network_os) }}"
 
 # - name: Gather switch interface information
 #   cisco.ios.ios_facts:
