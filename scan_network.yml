@@ -30,7 +30,7 @@
         - "'ASA' not in ios_result.ansible_facts.ansible_net_model"
       delegate_to: localhost
 
-- name: Re-IP Switch
+- name: Scan network
   hosts: reachable
   gather_facts: false
   connection: network_cli
