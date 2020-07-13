@@ -2,7 +2,7 @@
 # tasks file for cisco_network_scan
 
 - name: Gather switch interface information
-  ios_facts:
+  cisco.ios.ios_facts:
     gather_subset:
       - '!all'
       - '!min'
