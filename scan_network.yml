@@ -35,7 +35,8 @@
   gather_facts: false
   connection: network_cli
   collections:
-    - cisco.ios
+    - name: cisco.ios
+      source: https://galaxy.ansible.com
 
   tasks:
     - include_role:
