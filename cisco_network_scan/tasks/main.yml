@@ -19,7 +19,11 @@
     commands:
       - "show mac address-table interface {{ item.name }}"
   with_items: "{{ interfaces_parsed }}"
-  register: mac_address_table
+  register: mac_address_table_results
+
+- name: Parse mac address_table data
+  set_fact:
+    mac_address_table_parsed: "{{ mac_address_table_results | parse_genie(command="show mac address-table", os=ansible_network_os) }}"
 
 # - name: Gather switch interface information
 #   cisco.ios.ios_facts:

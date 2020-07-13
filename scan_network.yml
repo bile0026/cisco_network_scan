@@ -35,15 +35,10 @@
   gather_facts: false
   connection: network_cli
   collections:
-    - name: cisco.ios
-      source: https://galaxy.ansible.com
+    - cisco.ios
+    - clay584.parse_genie
 
   tasks:
-  # bring in the genie parser plugin for processing show command results
-    - name: Read in parse_genie role
-      include_role:
-        name: clay584.parse_genie
-
   # include the actual scanning role
     - include_role:
         name: cisco_network_scan
