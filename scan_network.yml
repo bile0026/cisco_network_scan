@@ -39,6 +39,12 @@
       source: https://galaxy.ansible.com
 
   tasks:
+  # bring in the genie parser plugin for processing show command results
+    - name: Read in parse_genie role
+      include_role:
+        name: clay584.parse_genie
+
+  # include the actual scanning role
     - include_role:
         name: cisco_network_scan
       vars:
