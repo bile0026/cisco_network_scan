@@ -21,7 +21,8 @@
 
 - name: Get interfaces from switch
   ios_command:
-    lines: "show interface status | json-pretty"
+    lines:
+      - "show interface status | json-pretty"
   register: ios_interfaces_result
 
 #FIXME Need to find the right key and elements for with_subelements
