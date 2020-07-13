@@ -25,7 +25,7 @@
     interfaces_parsed: item
   with_subelements:
     - "{{ ios_l2_interfaces.l2_interfaces }}"
-    - access
+    - name
 
 #FIXME not sure if when works
 - name: Get mac address_table
