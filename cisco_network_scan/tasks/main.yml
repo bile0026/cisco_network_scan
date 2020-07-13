@@ -21,7 +21,7 @@
 
 - name: Get interfaces from switch
   ios_command:
-    lines:
+    commands:
       - "show interface status | json-pretty"
   register: ios_interfaces_result
 
