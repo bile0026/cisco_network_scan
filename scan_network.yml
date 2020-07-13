@@ -34,6 +34,8 @@
   hosts: reachable
   gather_facts: false
   connection: network_cli
+  collections:
+    - cisco.ios
 
   tasks:
     - include_role:
