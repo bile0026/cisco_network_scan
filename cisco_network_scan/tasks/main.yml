@@ -1,23 +1,28 @@
 ---
 # tasks file for cisco_network_scan
 
-- name: Gather switch interface information
-  ios_facts:
-    gather_subset:
-      - '!all'
-      - '!min'
-    gather_network_resources:
-      - l2_interfaces
-  register: ios_interfaces_result
+# - name: Gather switch interface information
+#   ios_facts:
+#     gather_subset:
+#       - '!all'
+#       - '!min'
+#     gather_network_resources:
+#       - l2_interfaces
+#   register: ios_interfaces_result
 
-- name: Parse data
-  set_fact:
-    ios_l2_interfaces: "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }}"
+# - name: Parse data
+#   set_fact:
+#     ios_l2_interfaces: "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }}"
 
 # parse information from devices in preparation for processing changes
 # - name: Parse Access Interface Data
 #   set_fact:
 #     interfaces_parsed: "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }} | lookup('subelements', access, 'name')"
+
+- name: Get interfaces from switch
+  ios_command:
+    lines: "show interface status | json-pretty"
+  register: ios_interfaces_result
 
 #FIXME Need to find the right key and elements for with_subelements
 - name: Parse Access Interface Data
