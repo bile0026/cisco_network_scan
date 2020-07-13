@@ -17,7 +17,7 @@
 - name: Get mac address table for access ports
   ios_command:
     commands:
-      - "show mac address-table interface {{ item.name }}"
+      - "show mac address-table interface {{ item.key }}"
   with_items: interfaces_parsed
   register: mac_address_table
 
