@@ -46,10 +46,9 @@ parse information from devices in preparation for processing changes
 FIXME Need to find the right key and elements for with_subelements
 - name: Parse Access Interface Data
   set_fact:
-    interfaces_parsed: item
-  with_subelements:
-    - "{{ ios_interfaces_result.ansible_facts.ansible_network_resources }}"
-    - l2_interfaces.access
+    interfaces_parsed: item.access.name
+  with_items:
+    - "{{ ios_interfaces_result.ansible_facts.ansible_network_resources.l2_interfaces[] }}"
 
 #FIXME not sure if when works
 # - name: Get mac address_table
