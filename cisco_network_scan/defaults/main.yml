@@ -1,9 +1,20 @@
 ---
 # defaults file for cisco_network_scan
 
-# interface with nothing connected will have 5 lines. 1 device/mac address will be 7 lines
-mac_count: 6
+# interface with nothing connected will have 5 lines. 1 device/mac address will be 7 lines. 2 devices/macs would be 8 lines
+mac_count: 8
 
 access_interfaces: []
 suspicious_interfaces: []
 mac_addresses: []
+
+# report vars
+report_file: "MAC Address Report {{ lookup('pipe','date +%Y-%m-%d') }}.txt"
+generate_report: true
+
+# email report vars
+#smtp_server: smtp.example.com
+smtp_port: 25
+email_addresses:
+  - user@example.com
+from_email: from@example.com

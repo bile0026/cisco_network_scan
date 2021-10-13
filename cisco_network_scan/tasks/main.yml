@@ -50,3 +50,12 @@
   loop: "{{ suspicious_interfaces }}"
   loop_control:
     loop_var: current_interface
+
+- name: Generate report
+  template:
+    src: templates/mac_report.j2
+    dest: "{{ report_file }}"
+  delegate_to: localhost
+  run_once: true
+  when: generate_report
+  notify: email report
