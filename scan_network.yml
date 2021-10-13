@@ -36,10 +36,10 @@
   connection: network_cli
   collections:
     - cisco.ios
-    - clay584.parse_genie
+    # - clay584.genie
 
   tasks:
-  # include the actual scanning role
+    # include the actual scanning role
     - include_role:
         name: cisco_network_scan
       vars:
