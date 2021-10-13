@@ -23,4 +23,5 @@ email_addresses:
 from_email: from@example.com
 ```
 
+## Issues/bugs/suggestions
 Please open an issue if you find bugs or have suggestions.
