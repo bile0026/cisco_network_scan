@@ -1,3 +1,9 @@
 ---
 # defaults file for cisco_network_scan
 
+# interface with nothing connected will have 5 lines. 1 device/mac address will be 7 lines
+mac_count: 6
+
+access_interfaces: []
+suspicious_interfaces: []
+mac_addresses: []
