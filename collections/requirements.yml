@@ -1,0 +1,7 @@
+---
+# collections for cisco_network_scan role
+
+collections:
+  - name: cisco.ios
+    source: https://galaxy.ansible.com
+    version: 1.2.1
