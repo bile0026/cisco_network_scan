@@ -36,7 +36,6 @@
   connection: network_cli
   collections:
     - cisco.ios
-    # - clay584.genie
 
   tasks:
     # include the actual scanning role
