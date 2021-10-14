@@ -74,3 +74,5 @@
   when:
     - generate_report
     - suspicious_interfaces | length > 0
+  notify:
+    - email report
