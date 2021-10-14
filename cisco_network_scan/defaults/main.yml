@@ -1,7 +1,7 @@
 ---
 # defaults file for cisco_network_scan
 
-# interface with nothing connected will have 5 lines. 1 device/mac address will be 7 lines. 2 devices/macs would be 8 lines
+# interface with nothing connected will have 5 lines. 1 device/mac address will be 7 lines. Maximum of 2 devices/macs would be 8 lines (more than 2 devices will be "suspicious")
 mac_count: 8
 
 access_interfaces: []
