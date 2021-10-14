@@ -51,11 +51,26 @@
   loop_control:
     loop_var: current_interface
 
-- name: Generate report
-  template:
-    src: templates/mac_report.j2
-    dest: "{{ report_file }}"
-  delegate_to: localhost
-  run_once: true
-  when: generate_report
-  notify: email report
+- name: Generate Report
+  ansible.builtin.lineinfile:
+    path: ./{{ report_file }}
+    create: true
+    line: |
+      Device: {{ ansible_host }}
+      {% for interface in suspicious_interfaces %}
+        Interface: {{ interface.item.name }}
+            MAC Address      |   VLAN
+          ------------------------------------
+      {% for line in interface.stdout_lines[0] %}
+      {% if line | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1') | select('string') | length > 0 %}
+            {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\1')  | select('string'))[0] }}
+      {# end if line is not empty test #}
+      {% endif %}
+      {# end for line in interface.stdout_lines[0] #}
+      {% endfor %}
+      {# end for interfaces in suspicious_interfaces #}
+      {% endfor %}
+      ================================================================
+  when:
+    - generate_report
+    - suspicious_interfaces | length > 0
