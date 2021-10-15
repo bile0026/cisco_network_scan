@@ -38,4 +38,4 @@ class FilterModule(object):  # 1
         try:
             return mac_info[info_to_get]
         except:
-            return "none"
+            return "not found"
