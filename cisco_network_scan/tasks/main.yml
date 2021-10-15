@@ -60,7 +60,7 @@
       {% for interface in suspicious_interfaces %}
         Interface: {{ interface.item.name }}
       {% if include_vendor_info %}
-            MAC Address      |   VLAN     |    Vendor
+            MAC Address      |   VLAN     |    {{ info_type }}
           -------------------------------------------------
       {% else %}
             MAC Address      |   VLAN
