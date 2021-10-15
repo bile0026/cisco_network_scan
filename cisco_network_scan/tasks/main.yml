@@ -37,12 +37,12 @@
     loop_var: suspicious_interface
   when: (suspicious_interface.stdout_lines[0] | count) > mac_count
 
-- name: Build list of interface MAC addresses
-  set_fact:
-    mac_addresses: "{{ mac_addresses + [ mac_line.stdout_lines[0] | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1', multiline=True) ] | flatten }}"
-  loop: "{{ suspicious_interfaces }}"
-  loop_control:
-    loop_var: mac_line
+# - name: Build list of interface MAC addresses
+#   set_fact:
+#     mac_addresses: "{{ mac_addresses + [ mac_line.stdout_lines[0] | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1', multiline=True) ] | flatten }}"
+#   loop: "{{ suspicious_interfaces }}"
+#   loop_control:
+#     loop_var: mac_line
 
 - name: Display Suspicious Interfaces
   debug:
