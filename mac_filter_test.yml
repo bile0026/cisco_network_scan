@@ -1,0 +1,11 @@
+- name: Test mac filter
+  hosts: all
+  gather_facts: false
+  connection: local
+  vars:
+    mac_address: 10e7.c620.738c
+
+  tasks:
+    - name: Set Fact
+      set_fact:
+        vendor: "{{ mac_address | get_mac_info('company') }}"
