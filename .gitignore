@@ -1,2 +1,4 @@
 ansible.cfg
 *.txt
+.devcontainer
+.vscode
