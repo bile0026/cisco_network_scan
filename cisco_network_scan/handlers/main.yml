@@ -6,7 +6,7 @@
     from: "{{ from_email }}"
     to: "{{ email_addresses }}"
     port: "{{ smtp_port }}"
-    subject: MAC Address Report {{ lookup('pipe','date +%Y-%m-%d') }}
+    subject: MAC Address Report {{ location }} {{ lookup('pipe','date +%Y-%m-%d') }}
     subtype: html
     host: "{{ smtp_server }}"
     attach: "{{ report_file }}"
