@@ -7,7 +7,7 @@ Device: {{ host }}
           -------------------------------------------------
 {% for line in interface.stdout_lines[0] %}
 {% if line | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1') | select('string') | length > 0 %}
-      {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\1')  | select('string'))[0] }}      |    {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] | get_mac_info({{ info_type }}) }}
+      {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\1')  | select('string'))[0] }}      |    {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] | get_mac_info('company') }}
 {# end if line is not empty test #}
 {% endif %}
 {# end for line in interface.stdout_lines[0] #}
