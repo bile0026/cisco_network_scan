@@ -15,7 +15,8 @@ suspicious_interfaces: []
 mac_addresses: []
 
 # report vars
-report_file: "MAC Address Report {{ lookup('pipe','date +%Y-%m-%d') }}.txt"
+location: Ansible
+report_file: "MAC Address Report {{ location }} {{ lookup('pipe','date +%Y-%m-%d') }}.txt"
 generate_report: true
 
 # email report vars
