@@ -2,3 +2,4 @@ ansible.cfg
 *.txt
 .devcontainer
 .vscode
+filter_plugins/__pycache__
