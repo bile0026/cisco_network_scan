@@ -1,5 +1,5 @@
 ansible.cfg
-*.txt
+MAC*.txt
 .devcontainer
 .vscode
 filter_plugins/__pycache__
