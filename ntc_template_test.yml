@@ -1,0 +1,17 @@
+- name: Test NTC Templates
+  hosts: all
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Get mac table
+      ntc_show_command:
+        connection: ssh
+        platform: cisco_ios
+        host: "{{ inventory_hostname }}"
+        username: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        command: "show mac address-table"
+      register: results
+
+    - debug: var=results.response
