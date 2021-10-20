@@ -55,16 +55,23 @@
 #     var: suspicious_interfaces[0].stdout_lines[0][0] | type_debug
 
 - name: Generate Report
-  ansible.builtin.template:
-    src: templates/mac_report.j2
-    dest: "{{ report_file }}"
+  blockinfile:
+    path: ./{{ report_file }}
+    block: "{{ lookup('template', 'templates/mac_report.j2') }}"
+    marker: "{mark} MAC REPORT FOR {{ inventory_hostname }}"
+    create: true
   when:
     - generate_report
     - suspicious_interfaces | length > 0
-  notify:
-    - email report
-    
-
+# - name: Generate Report
+#   ansible.builtin.template:
+#     src: templates/mac_report.j2
+#     dest: "{{ report_file }}"
+#   when:
+#     - generate_report
+#     - suspicious_interfaces | length > 0
+#   notify:
+#     - email report
 # - name: Generate Report
 #   ansible.builtin.lineinfile:
 #     path: ./{{ report_file }}

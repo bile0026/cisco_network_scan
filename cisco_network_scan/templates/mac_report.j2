@@ -1,6 +1,5 @@
-Device: {{ ansible_host }}
 {% for interface in suspicious_interfaces %}
-      Interface: {{ interface.item.name }}
+  Interface: {{ interface.item.name }}
 {% if include_vendor_info %}
       MAC Address      |   VLAN     |    {{ info_type }}
       -------------------------------------------------
@@ -12,9 +11,9 @@ Device: {{ ansible_host }}
 {% for line in interface.stdout_lines[0] %}
 {% if line | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1') | select('string') | list | length > 0 %}
 {% if include_vendor_info %}
-      {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\1')  | select('string'))[0] }}      |    {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] | get_mac_info(info_type) }}
+      {{ (line | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\\1')  | select('string'))[0] }}      |    {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\\1')  | select('string'))[0] | get_mac_info('company') }}
 {% else %}
-      {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\1')  | select('string'))[0] }}
+      {{ (line | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\\1')  | select('string'))[0] }}
 {# end if include_vendor_info #}
 {% endif %}
 {# end if line is not empty test #}
