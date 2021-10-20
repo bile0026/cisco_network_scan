@@ -1,0 +1,30 @@
+- name: Test NTC Templates
+  hosts: all
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+  vars:
+    ansible_network_os: ios
+
+  tasks:
+
+    - name: "GATHER DATA VIA SHOW COMMANDS"
+      cisco.ios.ios_command:
+        commands: "show mac address-table interface g0/16"
+      register: command_output
+
+    - name: "TEST NTC TEMPLATE FILTERS"
+      set_fact:
+        mac_addresses: "{{ command_output.stdout[0] | ntc_parse(ios_commands[0], 'cisco_ios', 'ntc-ansible/ntc-templates/templates/') }}"
+
+    # - name: Get mac table
+    #   ntc_show_command:
+    #     connection: ssh
+    #     platform: cisco_ios
+    #     host: "{{ inventory_hostname }}"
+    #     username: "{{ ansible_user }}"
+    #     password: "{{ ansible_password }}"
+    #     template_dir: "./ntc-ansible/ntc-templates/templates"
+    #     command: "show mac address-table"
+    #   register: results
+
+    - debug: var=results.response

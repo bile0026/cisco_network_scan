@@ -17,9 +17,10 @@
       ignore_errors: true
 
     - name: Gather basic switch information
-      ios_facts:
+      cisco.ios.ios_facts:
         gather_subset: min
       register: ios_result
+      connection: ansible.netcommon.network_cli
 
     - name: Group hosts by online
       group_by: key=reachable
