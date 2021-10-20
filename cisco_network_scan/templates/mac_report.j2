@@ -1,22 +1,26 @@
-{% for host in play_hosts %}
-{% if hostvars[host]['suspicious_interfaces'] is defined %}
-Device: {{ host }}
-{% for interface in hostvars[host]['suspicious_interfaces'] %}
-  Interface: {{ interface.item.name }}
-       MAC Address      |   VLAN     |    {{ info_type }}
-          -------------------------------------------------
+Device: {{ ansible_host }}
+{% for interface in suspicious_interfaces %}
+      Interface: {{ interface.item.name }}
+{% if include_vendor_info %}
+      MAC Address      |   VLAN     |    {{ info_type }}
+      -------------------------------------------------
+{% else %}
+      MAC Address      |   VLAN
+      -------------------------------------------------
+{# end if include_vendor_info #}
+{% endif %}
 {% for line in interface.stdout_lines[0] %}
-{% if line | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1') | select('string') | length > 0 %}
-      {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\1')  | select('string'))[0] }}      |    {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] | get_mac_info('company') }}
+{% if line | regex_search('^.*([a-f0-9]{4}\\.[a-f0-9]{4}\\.[a-f0-9]{4}).*$', '\\1') | select('string') | list | length > 0 %}
+{% if include_vendor_info %}
+      {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\1')  | select('string'))[0] }}      |    {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] | get_mac_info(info_type) }}
+{% else %}
+      {{ (line | regex_search('^.*([a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}).*$', '\1')  | select('string'))[0] }}   |   {{ (line | regex_search('^ {0,3}([0-9]{1,4}).*$', '\1')  | select('string'))[0] }}
+{# end if include_vendor_info #}
+{% endif %}
 {# end if line is not empty test #}
 {% endif %}
 {# end for line in interface.stdout_lines[0] #}
 {% endfor %}
-
-{# end for interfaces in hostvars[host]['suspicious_interfaces'] #}
+{# end for interfaces in suspicious_interfaces #}
 {% endfor %}
 ================================================================
-{# end if hostvars[host]['suspicious_interfaces'] is defined #}
-{% endif %}
-{# end for host in play_hosts #}
-{% endfor %}
