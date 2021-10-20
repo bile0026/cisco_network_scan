@@ -63,6 +63,8 @@
   when:
     - generate_report
     - suspicious_interfaces | length > 0
+  notify:
+    - email report
 # - name: Generate Report
 #   ansible.builtin.template:
 #     src: templates/mac_report.j2
